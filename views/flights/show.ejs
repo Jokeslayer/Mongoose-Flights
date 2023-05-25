@@ -1,39 +1,70 @@
 <%- include('../partials/header') %>
 
-<section id="show-page">
-  <div>Airline: </div>
-  <div><%= flight.airline %></div>
-  <div>Airport: </div>
-  <div><%= flight.airport %></div>
-  <div>Flight Number: </div>
-  <div><%= flight.flightNo %></div>
-  <div> Departure Date</div>
-  <div><%= flight.departs %></div>
-</section>
-<br>
-<br>
-<form id="dest-form" action="/flights/<%= flight._id %>/destinations" method="POST">
-  <label>Add Destination:</label>
-  <input type="text" name="airport">
-  <label>Arrival Date</label>
-  <input type="date" name="arrival">
-  
-  <input type="submit" value="Add Destination">
-</form>
+  <h3><a href='/flights/<%= flight._id %>/tickets/new'> BUY NEW TICKET</a></h3>
 
-<br>
-<br>
-<br>
-<br>
+  <section id="show-page">
+    <div>Airline: </div>
+    <div>
+      <%= flight.airline %>
+    </div>
+    <div>Airport: </div>
+    <div>
+      <%= flight.airport %>
+    </div>
+    <div>Flight Number: </div>
+    <div>
+      <%= flight.flightNo %>
+    </div>
+    <div> Departure Date</div>
+    <div>
+      <%= flight.departs.toString().substring(0,15) %>
+    </div>
+  </section>
+  <br>
+  <br>
+  <form id="dest-form" action="/flights/<%= flight._id %>/destinations" method="POST">
+    <label>Add Destination:</label>
+    <input type="text" name="airport">
+    <label>Arrival Date</label>
+    <input type="date" name="arrival">
 
-<section>
-  <div>Destination:</div>
-  <% flight.destination.forEach(function(f) { %>
-    <tr>
-      <td><%= f.airport %></td>
-      <td><%= f.arrival %></td>
-    </tr>
-    <% }); %>
-</section>
+    <input type="submit" value="Add Destination">
+  </form>
 
-<%- include('../partials/footer') %>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div id="new-form">
+    <section>
+      <div>Ticket Roster:</div>
+      <% tickets.forEach(function(t) { %>
+        <tr>
+          <td>
+            <%= t.seat %>
+          </td>
+          <td>
+            <%= t.price %>
+          </td>
+        </tr>
+        <% }); %>
+    </section>
+
+    <section>
+      <div>Destination:</div>
+      <% flight.destination.forEach(function(f) { %>
+        <tr>
+          <td>
+            <%= f.airport %>
+          </td>
+          <td>
+            <%= f.arrival.toString().substring(0,15) %>
+          </td>
+        </tr>
+        <br>
+        <% }); %>
+    </section>
+
+    <%- include('../partials/footer') %>
+  </div>

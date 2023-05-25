@@ -1,4 +1,5 @@
 const Flight = require('../models/flight');
+const Ticket = require('../models/ticket');
 
 module.exports = {
   index,
@@ -8,12 +9,10 @@ module.exports = {
 };
 
 async function show(req, res) {
-  // Populate the cast array with performer docs instead of ObjectIds
   const flight = await Flight.findById(req.params.id);
+  const tickets = await Ticket.find({flight: req.params.id});
 
-  
-  //const performers = await Performer.find({ _id: { $nin: flight.cast } }).sort('name');
-  res.render('flights/show', { title: 'Flight Records', flight});
+  res.render('flights/show', { title: 'Flight Records', flight, tickets });
 }
 
 async function index(req, res) {
@@ -36,7 +35,7 @@ function newFlight(req, res) {
 
 async function create(req, res) {
   try {
-    console.log('testing',req.body);
+    console.log('testing', req.body);
     await Flight.create(req.body);
 
     // Always redirect after CUDing data
@@ -45,6 +44,7 @@ async function create(req, res) {
   } catch (err) {
     // Typically some sort of validation error
     console.log(err);
-    res.redirect('/flights/new', {title: 'Add Flight Record', errorMsg: err.message });
+    res.redirect('/flights/new', { title: 'Add Flight Record', errorMsg: err.message });
   }
+  module.exports = router;
 }
